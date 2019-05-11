@@ -64,8 +64,6 @@ public class SpiralWeapon
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.SetShotCharacterType(_owner.GetCharacterType());
 
-        bullet.SetSpeedRate(_bulletSpeedRate);
-        bullet.SetAngleRate(_bulletAngleRate);
 
         //bulletObject.transform.Rotate(Vector3.up, _curTestRot);
         //_curTestRot += 30;
