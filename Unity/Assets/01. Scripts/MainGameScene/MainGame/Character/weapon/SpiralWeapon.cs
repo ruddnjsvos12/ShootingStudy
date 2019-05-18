@@ -8,9 +8,12 @@ public class SpiralWeapon
     float _shotSpeed = 0.1f;
     float _shotDuration = 0.0f;
     float _shotAngle = 0.0f;
-    float _shotAngleRate = 10.0f;
+    protected float _shotAngleRate = 10.0f;
 
-    int _shotCount = 4;
+    int _shotCount = 1;
+
+    protected float _bulletSpeedRate = 0.0f;
+    protected float _bulletAngleRate = 0.0f;
 
     Character _owner;
 
@@ -19,9 +22,23 @@ public class SpiralWeapon
         _owner = owner;
     }
 
-    public void SetAngleRate(float angleRate)
+    virtual public void SetAngleRate(float angleRate)
     {
         _shotAngleRate = angleRate;
+    }
+
+    public void SetBulletSpeedRate(float speedRate)
+    {
+        _bulletSpeedRate = speedRate;
+    }
+
+    public void SetBulletAngleRate(float angleRate)
+    {
+        _bulletAngleRate = angleRate;
+    }
+    public void SetShotCount(int shotCount)
+    {
+        _shotCount = shotCount;
     }
 
     public void Fire(GameObject bulletPrefab)
@@ -41,15 +58,6 @@ public class SpiralWeapon
         _shotDuration += Time.deltaTime;
     }
 
-    public void SetBulletSpeedRate(float speedRate)
-    {
-
-    }
-
-    public void SetBulletAngleRate(float angleRate)
-    {
-
-    }
 
     void CreateBullet(GameObject bulletPrefab, float shotAngle)
     {
@@ -67,5 +75,10 @@ public class SpiralWeapon
 
         //bulletObject.transform.Rotate(Vector3.up, _curTestRot);
         //_curTestRot += 30;
+    }
+
+    virtual public void Update()
+    {
+
     }
 }

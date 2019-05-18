@@ -2,6 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//일정 시간을 체크에 쓰이는 일반적인 알고리즘
+
+/*
+{
+    if(interval <=duration{
+        duration = 0.0f;
+        //todo
+    }
+    // duration 증가
+    duration += Time.deltaTime;
+}
+*/
+
 public class Bullet : MonoBehaviour
 {
     float _speed = 3.5f;
@@ -74,4 +87,15 @@ public class Bullet : MonoBehaviour
 	{
 		_shotCharType = charType;
 	}
+
+    public void SetSpeedRate(float rate)
+    {
+        _speedRate = rate;
+    }
+
+    public void SetAngleRate(float rate)
+    {
+
+        _angleRate = rate;
+    }
 }

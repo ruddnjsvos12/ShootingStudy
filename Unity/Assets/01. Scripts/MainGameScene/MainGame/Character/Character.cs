@@ -39,17 +39,7 @@ public class Character : MonoBehaviour
             // 에디터에서 프리팹을 세팅
             // 세팅한 프리팹을 객체로 생성
             {
-                int index = 0;
-                if (CharType.Player == _charType)
-                {
-                    index = 0;
-                }
-                else
-                {
-                    index = 1;
-                }
-
-                GameObject obj = GameObject.Instantiate<GameObject>(_charPrefabList[index]);
+                GameObject obj = GameObject.Instantiate<GameObject>(_charPrefabList[(int)_charType]);
                 obj.transform.position = transform.position;
                 obj.transform.rotation = Quaternion.identity;
                 obj.transform.localScale = Vector3.one;
@@ -87,6 +77,7 @@ public class Character : MonoBehaviour
 
             UpdateState();
             UpdateMove();
+            UpdateWeapons();
         }
     }
 
@@ -268,21 +259,50 @@ public class Character : MonoBehaviour
     void CreateWeapon()
     {
         _weaponList.Clear();
-        { 
-            SpiralWeapon sprialWeapon = new SpiralWeapon();
-            sprialWeapon.SetOwner(this);
-            sprialWeapon.SetAngleRate(10.0f);
-            sprialWeapon.SetBulletSpeedRate(5.0f);
-            sprialWeapon.SetBulletAngleRate(10.0f);
-            _weaponList.Add(sprialWeapon);
-        }
+        /*
         {
-            SpiralWeapon sprialWeapon = new SpiralWeapon();
-            sprialWeapon.SetOwner(this);
-            sprialWeapon.SetAngleRate(-10.0f);
-            _weaponList.Add(sprialWeapon);
+            SpiralWeapon spiralWeapon = new SpiralWeapon();
+            spiralWeapon.SetOwner(this);
+            spiralWeapon.SetAngleRate(10.0f);
+            spiralWeapon.SetBulletSpeedRate(5.0f);
+            spiralWeapon.SetBulletAngleRate(10.0f);
+            _spiralWeaponList.Add(spiralWeapon);
+        }
+        */
+        if (CharType.Player == _charType) // 플레이어 무기 생성
+        {
+            SpiralWeapon spiralWeapon = new WasherSpiralWeapon();
+            spiralWeapon.SetOwner(this);
+            spiralWeapon.SetAngleRate(0.0f);
+            spiralWeapon.SetBulletSpeedRate(5.0f);
+            spiralWeapon.SetBulletAngleRate(0.0f);
+            spiralWeapon.SetShotCount(1);
+            _weaponList.Add(spiralWeapon);
+        }
+        else // 적 무기 생성
+        { 
+            {
+                SpiralWeapon spiralWeapon = new WasherSpiralWeapon();
+                spiralWeapon.SetOwner(this);
+                spiralWeapon.SetAngleRate(10.0f);
+                spiralWeapon.SetBulletSpeedRate(0.0f);
+                spiralWeapon.SetBulletAngleRate(0.0f);
+                spiralWeapon.SetShotCount(0);
+                _weaponList.Add(spiralWeapon);
+            }
+        }
+        //List<int>
+        //Dictionary<name, Bomb>
+    }
+
+    void UpdateWeapons()
+    {
+        for (int i = 0; i < _weaponList.Count; i++)
+        {
+            _weaponList[i].Update();
         }
     }
+
     public void Fire()
     {
         for (int i = 0; i < _weaponList.Count; i++)
