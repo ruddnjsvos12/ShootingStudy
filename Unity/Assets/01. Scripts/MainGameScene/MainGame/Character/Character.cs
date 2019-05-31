@@ -7,6 +7,8 @@ public class Character : MonoBehaviour
     [SerializeField] List<GameObject> _charPrefabList;
 
     [SerializeField] RuntimeAnimatorController _animatorController;
+    [SerializeField] GameObject _BossPoint;
+    BossGenerator bossGenerator;
 
     public enum CharType
     {
@@ -247,6 +249,20 @@ public class Character : MonoBehaviour
     }
 
 
+    // Setting BossPoint
+
+    public void SetBossPoint(GameObject BossPoint)
+    {
+        _BossPoint = BossPoint;
+        bossGenerator = _BossPoint.GetComponent<BossGenerator>();
+    }
+
+    public void GenerateBoss()
+    {
+        bossGenerator.Generate();
+    }
+
+
     // Attack
 
     [SerializeField] GameObject _bulletPrefab;
@@ -281,15 +297,19 @@ public class Character : MonoBehaviour
         }
         else // 적 무기 생성
         { 
+
+            for(int i = 0; i < 5; i++)
             {
-                SpiralWeapon spiralWeapon = new WasherSpiralWeapon();
-                spiralWeapon.SetOwner(this);
-                spiralWeapon.SetAngleRate(10.0f);
-                spiralWeapon.SetBulletSpeedRate(0.0f);
-                spiralWeapon.SetBulletAngleRate(0.0f);
-                spiralWeapon.SetShotCount(0);
-                _weaponList.Add(spiralWeapon);
-            }
+                {
+                    SpiralWeapon spiralWeapon = new WasherSpiralWeapon();
+                    spiralWeapon.SetOwner(this);
+                    spiralWeapon.SetAngleRate(10.0f);
+                    spiralWeapon.SetBulletSpeedRate(0.0f);
+                    spiralWeapon.SetBulletAngleRate(0.0f);
+                    spiralWeapon.SetShotCount((i+2));
+                    _weaponList.Add(spiralWeapon);
+                }
+            } 
         }
         //List<int>
         //Dictionary<name, Bomb>
@@ -303,12 +323,15 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void Fire()
+    public void Fire(int index)
     {
+        _weaponList[index].Fire(_bulletPrefab);
+        /*
         for (int i = 0; i < _weaponList.Count; i++)
         {
-            _weaponList[i].Fire(_bulletPrefab);
-        }
+            
+        }*/
+
     }
 }
 

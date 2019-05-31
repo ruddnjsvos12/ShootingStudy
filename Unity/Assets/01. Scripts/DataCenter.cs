@@ -6,6 +6,7 @@ public class DataCenter
 {
     // Singleton
     static DataCenter _instance = null;
+
     public static DataCenter GetInstance()
     {
         if(null == _instance)

@@ -65,7 +65,7 @@ public class PlayerModule : CharacterModule
         // 총알 발사 (마우스 왼쪽 버튼)
         if (true == Input.GetMouseButton(0))
         {
-            _character.Fire();
+            _character.Fire(0);
 		}
     }
 }
