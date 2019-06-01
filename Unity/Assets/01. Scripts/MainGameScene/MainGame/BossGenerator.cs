@@ -6,6 +6,7 @@ public class BossGenerator : MonoBehaviour
 {
     [SerializeField] GameObject _parentObject;
     [SerializeField] GameObject _characterPrefab;
+    [SerializeField] GameObject _testTarget;
     List<GameObject> _wayPointList;
     Character character;
 
@@ -17,7 +18,7 @@ public class BossGenerator : MonoBehaviour
 
     public void Generate()
     {
-        
+        /*
         if (DataCenter.GetInstance().GetCount() < 5)
         {
             //이 네줄은 그냥 외우기
@@ -29,20 +30,16 @@ public class BossGenerator : MonoBehaviour
 
             character = obj.GetComponent<Character>();
             character.SetBossPoint(gameObject);
+            character._testTarget = _testTarget;
             DataCenter.GetInstance().AddCount();
         }
-        
+        */
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        if(character.GetStateType() == Character.eState.DEATH)
-        {
-            Generate();
-        }
-        */
+
     }
 
 

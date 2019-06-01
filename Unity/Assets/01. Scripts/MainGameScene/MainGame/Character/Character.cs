@@ -40,6 +40,7 @@ public class Character : MonoBehaviour
             // 1.
             // 에디터에서 프리팹을 세팅
             // 세팅한 프리팹을 객체로 생성
+            
             {
                 GameObject obj = GameObject.Instantiate<GameObject>(_charPrefabList[(int)_charType]);
                 obj.transform.position = transform.position;
@@ -250,7 +251,7 @@ public class Character : MonoBehaviour
 
 
     // Setting BossPoint
-
+    /*
     public void SetBossPoint(GameObject BossPoint)
     {
         _BossPoint = BossPoint;
@@ -260,19 +261,22 @@ public class Character : MonoBehaviour
     public void GenerateBoss()
     {
         bossGenerator.Generate();
-    }
+    }*/
 
 
     // Attack
 
-    [SerializeField] GameObject _bulletPrefab;
+    //[SerializeField] GameObject _bulletPrefab;
+    [SerializeField] protected List<GameObject> _bulletPrefabs;
+
 
     //SpiralWeapon _sprialWeapon1 = null;
     //SpiralWeapon _sprialWeapon2 = null;
 
-    List<SpiralWeapon> _weaponList = new List<SpiralWeapon>();
+    protected List<SpiralWeapon> _weaponList = new List<SpiralWeapon>();
+    public GameObject _testTarget;
 
-    void CreateWeapon()
+    virtual protected void CreateWeapon()
     {
         _weaponList.Clear();
         /*
@@ -285,21 +289,9 @@ public class Character : MonoBehaviour
             _spiralWeaponList.Add(spiralWeapon);
         }
         */
-        if (CharType.Player == _charType) // 플레이어 무기 생성
-        {
-            SpiralWeapon spiralWeapon = new WasherSpiralWeapon();
-            spiralWeapon.SetOwner(this);
-            spiralWeapon.SetAngleRate(0.0f);
-            spiralWeapon.SetBulletSpeedRate(5.0f);
-            spiralWeapon.SetBulletAngleRate(0.0f);
-            spiralWeapon.SetShotCount(1);
-            _weaponList.Add(spiralWeapon);
-        }
-        else // 적 무기 생성
-        { 
-
-            for(int i = 0; i < 5; i++)
-            {
+        
+                
+                /*
                 {
                     SpiralWeapon spiralWeapon = new WasherSpiralWeapon();
                     spiralWeapon.SetOwner(this);
@@ -308,9 +300,7 @@ public class Character : MonoBehaviour
                     spiralWeapon.SetBulletAngleRate(0.0f);
                     spiralWeapon.SetShotCount((i+2));
                     _weaponList.Add(spiralWeapon);
-                }
-            } 
-        }
+                }*/
         //List<int>
         //Dictionary<name, Bomb>
     }
@@ -325,13 +315,22 @@ public class Character : MonoBehaviour
 
     public void Fire(int index)
     {
-        _weaponList[index].Fire(_bulletPrefab);
-        /*
+        //_weaponList[index].Fire(null); //null 대신 _testTarget
+        
         for (int i = 0; i < _weaponList.Count; i++)
         {
-            
-        }*/
+            _weaponList[i].Fire(null);
+        }
 
+    }
+
+    public bool IsDead()
+    {
+        if (eState.DEATH == _stateType)
+        {
+            return true;
+        }
+        return false;
     }
 }
 

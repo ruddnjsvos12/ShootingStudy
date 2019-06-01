@@ -17,11 +17,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    float _speed = 3.5f;
+    
+    float _speed = 1.5f;
     float _speedRate = 1.0f; //가속도
 
     float _angle = 0.0f;
     float _angleRate = 0.0f;
+
+    GameObject _target = null;
+
+    float _aimingInterval = 1.0f;
+    float _aimingTime = 0.0f;
 
     void Start ()
     {
@@ -36,6 +42,30 @@ public class Bullet : MonoBehaviour
 		transform.position = nextPos;
 
         _speed += (_speedRate * Time.deltaTime);
+
+        // 타겟이 있으면 타겟을 바라본다.
+        if(null != _target)
+        {
+            if(_aimingInterval <= _aimingTime)
+            {
+                _aimingTime = 0.0f;
+                // 타겟을 바라본다.
+                Vector3 targetPos = _target.transform.position;
+                targetPos.y = transform.position.y;
+                transform.LookAt(targetPos); // 여기선 회전하지 않는다.
+                // 일정 주기가 되면 목표 각도를 세팅
+            }
+            else
+            {
+                _aimingTime += Time.deltaTime;
+                // 목표 각도로 조금씩 회전
+            }
+        }
+        else
+        {
+            transform.Rotate(Vector3.up, _angle);
+            _angle += (_angleRate * Time.deltaTime);
+        }
 
         transform.Rotate(Vector3.up, _angle);
         _angle += (_angleRate * Time.deltaTime);
@@ -97,5 +127,10 @@ public class Bullet : MonoBehaviour
     {
 
         _angleRate = rate;
+    }
+
+    public void SetTarget(GameObject target)
+    {
+        _target = target;
     }
 }

@@ -9,7 +9,7 @@ public class DataCenter
 
     public static DataCenter GetInstance()
     {
-        if(null == _instance)
+        if (null == _instance)
         {
             _instance = new DataCenter();
         }
@@ -32,5 +32,16 @@ public class DataCenter
     public int GetCount()
     {
         return _count;
+    }
+
+    int _stage = 0;
+    public int GetStage()
+    {
+        return _stage;
+    }
+
+    public void NextStage()
+    {
+        _stage++;
     }
 }

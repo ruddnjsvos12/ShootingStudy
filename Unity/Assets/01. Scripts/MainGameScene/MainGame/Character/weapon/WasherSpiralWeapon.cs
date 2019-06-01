@@ -12,13 +12,14 @@ public class WasherSpiralWeapon : SpiralWeapon
     float _updateShotAngleRate;
     float _updateBulletAngleRate;
 
+    /*
     override public void SetAngleRate(float angleRate)
     {
         _shotAngleRate = angleRate;
         _originalShotAngleRate = angleRate;
         _originalBulletAngleRate = angleRate;
     }
-
+    */
     override public void Update()
     {
         /*

@@ -9,8 +9,10 @@ public class DeathState : State
         _character.PlayAnimation("death", () =>
         {
             GameObject.Destroy(_character.gameObject);
+            /*
             if (_character.GetCharacterType() == Character.CharType.NPC)
                 _character.GenerateBoss();
+                */
         });
     }
 }
